@@ -124,12 +124,14 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
     if (!visibleModals.length) {
       Animated.timing(backdropOpacity.current, {
         toValue: 0,
-        duration: backdrop.transitionOutTiming
+        duration: backdrop.transitionOutTiming,
+        useNativeDriver: true
       }).start();
     } else {
       Animated.timing(backdropOpacity.current, {
         toValue: backdrop.activeOpacity,
-        duration: backdrop.transitionInTiming
+        duration: backdrop.transitionInTiming,
+        useNativeDriver: true
       }).start();
     }
   }, [modals, props.backdrop]);

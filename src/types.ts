@@ -44,7 +44,7 @@ export interface ModalType {
 export interface ConsumerProps {
   modals: ModalType[];
   onShowModal: (config: ShowModalConfig) => void;
-  setModals: (modals: ModalType[]) => void;
+  setModals: React.Dispatch<React.SetStateAction<ModalType[]>>
 }
 
 export interface ModalComponentProps<Params extends Record<string, any>>

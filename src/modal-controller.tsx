@@ -5,17 +5,17 @@ import React, {
   useState,
   useEffect,
   useRef,
-  useCallback
+  useCallback,
 } from "react";
 import {
   initializeRegistryWithDefinitions,
-  View
+  View,
 } from "react-native-animatable";
 import {
   Animated,
   StyleSheet,
   TouchableWithoutFeedback,
-  Modal
+  Modal,
 } from "react-native";
 import {
   ModalType,
@@ -25,36 +25,36 @@ import {
   ConsumerProps,
   BackdropConfig,
   Priority,
-  AnimationConfig
+  AnimationConfig,
 } from "./types";
 
 const defaultBackdrop: Required<BackdropConfig> = {
   activeOpacity: 0.5,
   transitionInTiming: 500,
-  transitionOutTiming: 500
+  transitionOutTiming: 500,
 };
 
 const defaultAnimation: Required<AnimationConfig> = {
   in: "fadeIn",
   out: "bounceOut",
   inDuration: 500,
-  outDuration: 500
+  outDuration: 500,
 };
 
 const Context = createContext<ConsumerProps>({
   modals: [],
-  onShowModal: () => {}
+  onShowModal: () => {},
 });
 
 const modalAnimatorStyles = StyleSheet.create({
   wrapper: {
     ...StyleSheet.absoluteFillObject,
     alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
   },
   absoluteWrapper: {
-    position: "absolute"
-  }
+    position: "absolute",
+  },
 });
 
 const ModalAnimator = (props: ModalAnimatorProps) => {
@@ -71,7 +71,7 @@ const ModalAnimator = (props: ModalAnimatorProps) => {
     ) {
       const animation = {
         ...defaultAnimation,
-        ...props.animation
+        ...props.animation,
       };
       isAnimatingOut.current = true;
       const animationFn = (viewRef.current as any)[animation.out]; // todo: types
@@ -106,8 +106,8 @@ const ModalAnimator = (props: ModalAnimatorProps) => {
 const modalControllerProviderStyles = StyleSheet.create({
   backdrop: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "black"
-  }
+    backgroundColor: "black",
+  },
 });
 
 const ModalControllerProvider = (props: ModalControllerProviderProps) => {
@@ -118,43 +118,45 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
     const visibleModals = modals.filter(({ isVisible }) => isVisible);
     const backdrop = {
       ...defaultBackdrop,
-      ...(props.backdrop || {})
+      ...(props.backdrop || {}),
     };
     // hide backdrop if the is no modals to display
     if (!visibleModals.length) {
       Animated.timing(backdropOpacity.current, {
         toValue: 0,
         duration: backdrop.transitionOutTiming,
-        useNativeDriver: true
+        useNativeDriver: true,
       }).start();
     } else {
       Animated.timing(backdropOpacity.current, {
         toValue: backdrop.activeOpacity,
         duration: backdrop.transitionInTiming,
-        useNativeDriver: true
+        useNativeDriver: true,
       }).start();
     }
   }, [modals, props.backdrop]);
 
   const handleAnimationOutDidEnd = (id: string) => () =>
-    setModals(currentModals => currentModals.filter(modal => modal.id !== id));
+    setModals((currentModals) =>
+      currentModals.filter((modal) => modal.id !== id)
+    );
 
   const hideTopModal = () =>
-    setModals(currentModals => {
+    setModals((currentModals) => {
       const newModals = [...currentModals];
       newModals[newModals.length - 1] = {
         ...newModals[newModals.length - 1],
-        isVisible: false
+        isVisible: false,
       };
       return newModals;
     });
 
   const hideModalAtIndex = (modalIndex: number) =>
-    setModals(currentModals => {
+    setModals((currentModals) => {
       const newModals = [...currentModals];
       newModals[modalIndex] = {
         ...newModals[modalIndex],
-        isVisible: false
+        isVisible: false,
       };
       return newModals;
     });
@@ -163,7 +165,7 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
     const otherModals =
       config.priority === Priority.Standard
         ? [...modals]
-        : modals.map(modal => ({ ...modal, isVisible: false }));
+        : modals.map((modal) => ({ ...modal, isVisible: false }));
     const configModal = props.modals.find(({ name }) => config.name === name);
     if (!configModal) {
       console.error(`Modal with name ${config.name} not found`);
@@ -175,8 +177,8 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
         ...configModal,
         id: Math.random().toString(),
         isVisible: true,
-        ...config
-      }
+        ...config,
+      },
     ]);
   };
 
@@ -194,7 +196,8 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
   const isCancelable = topModal && topModal.isCancelable;
   const modalConsumerProps = {
     modals,
-    onShowModal: handleShowModal
+    onShowModal: handleShowModal,
+    setModals,
   };
 
   return (
@@ -215,7 +218,7 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
             props.supportedOrientations) || [
             "portrait",
             "portrait-upside-down",
-            "landscape"
+            "landscape",
           ]
         }
         onRequestClose={hideTopModal}
@@ -226,7 +229,7 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
           <Animated.View
             style={[
               modalControllerProviderStyles.backdrop,
-              { opacity: backdropOpacity.current }
+              { opacity: backdropOpacity.current },
             ]}
           />
         </TouchableWithoutFeedback>

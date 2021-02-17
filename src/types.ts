@@ -5,13 +5,13 @@ import {
   ViewStyle,
   TextStyle,
   ImageStyle,
-  ModalProps
+  ModalProps,
 } from "react-native";
 import { CustomAnimation, Animation } from "react-native-animatable";
 
 export enum Priority {
   Standard,
-  Override
+  Override,
 }
 
 export interface AnimationConfig {
@@ -43,6 +43,7 @@ export interface ModalType {
 export interface ConsumerProps {
   modals: ModalType[];
   onShowModal: (config: ShowModalConfig) => void;
+  setModals: (modals: ModalType[]) => void;
 }
 
 export interface ModalComponentProps<Params extends Record<string, any>>

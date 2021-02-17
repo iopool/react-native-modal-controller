@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+/* eslint-disable prettier/prettier */
 /* eslint-disable import/no-unresolved */
 import React, {
   createContext,
@@ -44,6 +46,7 @@ const defaultAnimation: Required<AnimationConfig> = {
 const Context = createContext<ConsumerProps>({
   modals: [],
   onShowModal: () => {},
+  setModals: () => {},
 });
 
 const modalAnimatorStyles = StyleSheet.create({

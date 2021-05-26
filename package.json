@@ -1,6 +1,6 @@
 {
   "name": "@iopool/react-native-modal-controller",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Handle many modals with ease",
   "main": "lib/index.js",
   "author": "Henry Kirkness",

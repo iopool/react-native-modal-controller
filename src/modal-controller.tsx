@@ -226,7 +226,9 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
           ]
         }
         onRequestClose={() => {
-          onRequestClose && onRequestClose();
+          if(onRequestClose) {
+            onRequestClose();
+          }
           hideTopModal();
         }}
       >

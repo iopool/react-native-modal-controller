@@ -34,6 +34,7 @@ export interface ModalType {
   priority?: Priority;
   isVisible: boolean;
   isCancelable?: boolean;
+  onRequestClose?: () => void;
   Component: any;
   absolutePositioning?: StyleProp<ViewStyle>;
   animation: AnimationConfig;

@@ -197,6 +197,7 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
 
   const topModal = modals[modals.length - 1];
   const isCancelable = topModal && topModal.isCancelable;
+  const onRequestClose = topModal && topModal.onRequestClose;
   const modalConsumerProps = {
     modals,
     onShowModal: handleShowModal,
@@ -224,7 +225,10 @@ const ModalControllerProvider = (props: ModalControllerProviderProps) => {
             "landscape",
           ]
         }
-        onRequestClose={hideTopModal}
+        onRequestClose={() => {
+          onRequestClose && onRequestClose();
+          hideTopModal();
+        }}
       >
         <TouchableWithoutFeedback
           onPress={isCancelable ? hideTopModal : undefined}
